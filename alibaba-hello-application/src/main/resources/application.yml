@@ -5,10 +5,6 @@ spring:
     application:
         name: hello
 
-feign:
-    hystrix:
-        enabled: false
-
 management:
     endpoints:
         web:
