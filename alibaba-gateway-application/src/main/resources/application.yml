@@ -1,0 +1,108 @@
+server:
+    port: 8443
+
+spring:
+    application:
+        name: gateway
+#    profiles:
+#        include: commons
+#        active: eureka-peer,feign
+    main:
+        web-application-type: reactive # 项目里依赖的web需要设置次属性
+    cloud:
+        discovery:
+            locator:
+                enabled: true
+        gateway:
+            routes: # 路由
+            - id: hello
+              uri: lb://hello
+              predicates:
+                - Path=/api/hello/**
+            - id: world
+              uri: lb://world
+              predicates:
+              - Path=/api/world/**
+#              filters:
+#                - StripPrefix=0
+#                auth:
+#                    path: /api/auth/**
+#                    serviceId: auth
+#                    stripPrefix: false
+#                cart:
+#                    path: /api/cart/**
+#                    serviceId: cart
+#                    stripPrefix: false
+#                comment:
+#                    path: /api/comment/**
+#                    serviceId: comment
+#                    stripPrefix: false
+#                commodity:
+#                    path: /api/commodity/**
+#                    serviceId: commodity
+#                    stripPrefix: false
+#                customer:
+#                    path: /api/customer/**
+#                    serviceId: customer
+#                    stripPrefix: false
+#                eureka:
+#                    path: /eureka/**
+#                    url: http://localhost:8761
+#                    stripPrefix: false
+#                finance:
+#                    path: /api/finance/**
+#                    serviceId: finance
+#                    stripPrefix: false
+#                inventory:
+#                    path: /api/inventory/**
+#                    serviceId: inventory
+#                    stripPrefix: false
+#                logistics:
+#                    path: /api/logistics/**
+#                    serviceId: logistics
+#                    stripPrefix: false
+#                membership:
+#                    path: /api/membership/**
+#                    serviceId: membership
+#                    stripPrefix: false
+#                order:
+#                    path: /api/order/**
+#                    serviceId: order
+#                    stripPrefix: false
+#                pay:
+#                    path: /api/pay/**
+#                    serviceId: pay
+#                    stripPrefix: false
+#                promotion:
+#                    path: /api/promotion/**
+#                    serviceId: promotion
+#                    stripPrefix: false
+#                purchase:
+#                    path: /api/purchase/**
+#                    serviceId: purchase
+#                    stripPrefix: false
+#                schedule:
+#                    path: /api/schedule/**
+#                    serviceId: schedule
+#                    stripPrefix: false
+#                wms:
+#                    path: /api/wms/**
+#                    serviceId: wms
+#                    stripPrefix: false
+#                reliable:
+#                    path: /api/reliable/**
+#                    serviceId: reliable
+#                    stripPrefix: false
+#                offort:
+#                    path: /api/offort/**
+#                    serviceId: offort
+#                    stripPrefix: false
+#                # 测试代码
+#                hello:
+#                    path: /api/hello/**
+#                    serviceId: hello
+#                    stripPrefix: false
+#                world:
+#                    path: /api/world/**
+#                    serviceId: world
+#                    stripPrefix: false

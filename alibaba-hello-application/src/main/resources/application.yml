@@ -1,0 +1,19 @@
+server:
+    port: 8084
+
+spring:
+    application:
+        name: hello
+
+feign:
+    hystrix:
+        enabled: false
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: ALWAYS

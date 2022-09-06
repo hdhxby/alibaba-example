@@ -1,0 +1,15 @@
+server:
+    port: 8082
+
+spring:
+    application:
+        name: world
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: ALWAYS
