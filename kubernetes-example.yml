@@ -1,0 +1,10 @@
+version: '3'
+services:
+  gateway:
+    image: alibaba-gateway-application
+    ports:
+      - 8080:8080
+  hello:
+    image: alibaba-hello-application
+  world:
+    image: alibaba-world-application

@@ -10,14 +10,29 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>alibaba-gateway-application</module>
-        <module>alibaba-hello-application</module>
-        <module>alibaba-world-application</module>
+        <module>alibaba-example-configuration</module>
+        <module>alibaba-example-gateway</module>
+        <module>alibaba-example-hello</module>
+        <module>alibaba-example-world</module>
     </modules>
     <properties>
-        <spring-boot.version>2.7.2</spring-boot.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+        <!-- Build properties -->
+<!--        <maven.version>3.3.9</maven.version>-->
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- Dependency versions -->
+        <spring-boot.version>2.7.5</spring-boot.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <springfox.version>3.0.0</springfox.version>
+        <skywalking.version>8.13.0</skywalking.version>
+        <logstash.version>7.2</logstash.version>
+        <lombok.version>1.18.20</lombok.version>
+        <!-- Plugin versions -->
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+        <jib-maven-plugin.image>docker://openjdk:17</jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>arm64</jib-maven-plugin.architecture>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -43,6 +58,26 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -52,5 +87,54 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <!-- https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md -->
+                    <configuration>
+                        <from>
+                            <image>${jib-maven-plugin.image}</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>${jib-maven-plugin.architecture}</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
+                        </from>
+                        <to>
+                            <image>${project.artifactId}:latest</image>
+                        </to>
+<!--                    <container>-->
+<!--                        <entrypoint>-->
+<!--                            <shell>bash</shell>-->
+<!--                            <option>-c</option>-->
+<!--                            <arg>/entrypoint.sh</arg>-->
+<!--                        </entrypoint>-->
+<!--                        <ports>-->
+<!--                            <port>8080</port>-->
+<!--                        </ports>-->
+<!--                        <environment>-->
+<!--                            <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>-->
+<!--                            <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>-->
+<!--                        </environment>-->
+<!--                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>-->
+<!--                        <user>1000</user>-->
+<!--                    </container>-->
+<!--                    <extraDirectories>-->
+<!--                        <paths>src/main/docker/jib</paths>-->
+<!--                        <permissions>-->
+<!--                            <permission>-->
+<!--                                <file>/entrypoint.sh</file>-->
+<!--                                <mode>755</mode>-->
+<!--                            </permission>-->
+<!--                        </permissions>-->
+<!--                    </extraDirectories>-->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
